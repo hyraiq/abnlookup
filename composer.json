@@ -3,6 +3,8 @@
     "description": "ABN validation and verification using the ABR web services API",
     "type": "library",
     "require": {
+        "php": ">=8.0",
+        "ext-json": "*",
         "symfony/serializer": "^6.0",
         "symfony/validator": "^6.0",
         "symfony/http-client": "^6.0"
@@ -18,7 +20,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "hyraiq\\AbnLookup\\": "src/"
+            "Hyra\\AbnLookup\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hyra\\Tests\\AbnLookup\\": "tests/"
         }
     },
     "minimum-stability": "stable"
