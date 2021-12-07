@@ -1,7 +1,9 @@
 version: '3.9'
 services:
     php:
-        image: php:8.0-alpine
+        build:
+            context: docker/
+            dockerfile: php.Dockerfile
         working_dir: /app
         volumes:
             - './:/app'
