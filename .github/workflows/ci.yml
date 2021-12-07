@@ -6,9 +6,7 @@ on:
         branches: [ main ]
 jobs:
     psalm:
-        runs-on: ubuntu-18.04
-        container:
-            image: php:8.0-cli
+        runs-on: ubuntu-20.04
         steps:
             -   uses: actions/checkout@v2
             -   name: Setup PHP with PECL extension
@@ -19,8 +17,6 @@ jobs:
                 run: make psalm-github
     phpstan:
         runs-on: ubuntu-18.04
-        container:
-            image: php:8.0
         steps:
             -   uses: actions/checkout@v2
             -   name: Setup PHP with PECL extension
