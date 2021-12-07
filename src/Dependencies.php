@@ -24,6 +24,7 @@ final class Dependencies
 {
     public static function serializer(): Serializer
     {
+        // @phpstan-ignore-next-line the AnnotationException is only thrown if necessary modules aren't loaded
         $classMetadataFactory       = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
         $propertyAccessor           = new PropertyAccessor();

@@ -118,7 +118,6 @@ final class AbnClient implements AbnClientInterface
         try {
             /** @psalm-var T $model */
             $model = $this->denormalizer->denormalize($body, $type, 'json');
-            // @phpstan-ignore-next-line yes it can throw ExceptionInterface
         } catch (SerializerExceptionInterface $e) {
             throw new UnexpectedResponseException(
                 \sprintf('Unable to deserialize response from the ABR "%s": %s', $response, $e->getMessage()),

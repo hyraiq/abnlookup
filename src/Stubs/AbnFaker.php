@@ -12,6 +12,7 @@ final class AbnFaker
 
     public static function validAbn(): string
     {
+        // @phpstan-ignore-next-line it can find an appropriate source of randomness
         $randomNumber = \str_pad((string) \random_int(1, 999999999), 9, '0', \STR_PAD_LEFT);
         $abn          = '10' . $randomNumber;
 
@@ -29,6 +30,7 @@ final class AbnFaker
 
     public static function invalidAbn(): string
     {
+        // @phpstan-ignore-next-line it can find an appropriate source of randomness
         return \str_pad((string) \random_int(1, 999999999), 10, '0', \STR_PAD_LEFT);
     }
 }

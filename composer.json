@@ -23,7 +23,10 @@
         "phpstan/phpstan": "^1.2",
         "phpmd/phpmd": "^2.11",
         "fakerphp/faker": "1.14.1",
-        "symfony/flex": "^2.0"
+        "symfony/flex": "^2.0",
+        "phpstan/phpstan-strict-rules": "^1.1",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "pepakriz/phpstan-exception-rules": "^0.12.0"
     },
     "license": "MIT",
     "autoload": {
