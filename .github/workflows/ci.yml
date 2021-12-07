@@ -1,0 +1,43 @@
+name: CI
+on:
+    - pull_request
+    workflow_dispatch: ~
+    push:
+        branches: [ main ]
+jobs:
+    psalm:
+        runs-on: ubuntu-18.04
+        container:
+            image: php:8.0-bullseye
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Setup PHP with PECL extension
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.0'
+            -   name: build
+                run: make psalm-github
+    phpstan:
+        runs-on: ubuntu-18.04
+        container:
+            image: php:8.0-bullseye
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Setup PHP with PECL extension
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.0'
+            -   name: build
+                run: make phpstan-github
+    cs-fixer:
+        runs-on: ubuntu-18.04
+        container:
+            image: php:8.0-bullseye
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Setup PHP with PECL extension
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.0'
+            -   name: build
+                run: make fix-github
