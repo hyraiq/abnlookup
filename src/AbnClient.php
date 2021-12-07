@@ -10,6 +10,7 @@ use Hyra\AbnLookup\Exception\InvalidAbnException;
 use Hyra\AbnLookup\Exception\InvalidGuidException;
 use Hyra\AbnLookup\Exception\UnexpectedResponseException;
 use Hyra\AbnLookup\Model\AbnResponse;
+use Hyra\AbnLookup\Model\AbstractResponse;
 use Hyra\AbnLookup\Model\NamesResponse;
 use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;

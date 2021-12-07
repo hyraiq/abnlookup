@@ -22,7 +22,7 @@
         "vimeo/psalm": "^4.14",
         "phpstan/phpstan": "^1.2",
         "phpmd/phpmd": "^2.11",
-        "fakerphp/faker": "^1.17",
+        "fakerphp/faker": "1.14.1",
         "symfony/flex": "^2.0"
     },
     "license": "MIT",
