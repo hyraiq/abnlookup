@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class BaseModelTest extends TestCase
@@ -34,7 +33,7 @@ abstract class BaseModelTest extends TestCase
 
         $this->faker = Factory::create();
         $this->faker->seed();
-        $this->validator = Dependencies::validator();
+        $this->validator  = Dependencies::validator();
         $this->serializer = Dependencies::serializer();
     }
 
