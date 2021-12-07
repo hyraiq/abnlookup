@@ -8,7 +8,7 @@ jobs:
     psalm:
         runs-on: ubuntu-18.04
         container:
-            image: php:8.0-bullseye
+            image: php:8.0-cli
         steps:
             -   uses: actions/checkout@v2
             -   name: Setup PHP with PECL extension
@@ -20,7 +20,7 @@ jobs:
     phpstan:
         runs-on: ubuntu-18.04
         container:
-            image: php:8.0-bullseye
+            image: php:8.0
         steps:
             -   uses: actions/checkout@v2
             -   name: Setup PHP with PECL extension
@@ -31,8 +31,6 @@ jobs:
                 run: make phpstan-github
     cs-fixer:
         runs-on: ubuntu-18.04
-        container:
-            image: php:8.0-bullseye
         steps:
             -   uses: actions/checkout@v2
             -   name: Setup PHP with PECL extension
