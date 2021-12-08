@@ -26,3 +26,12 @@ jobs:
             -   uses: ./.github/actions/setup-php
             -   name: Build
                 run: make fix-github
+    phpunit:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: ./.github/actions/setup-php
+            -   name: Setup problem matchers for PHPUnit
+                run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+            -   name: Build
+                run: make phpunit

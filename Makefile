@@ -29,3 +29,7 @@ phpstan:
 .PHONY: phpstan-github
 phpstan-github:
 	php vendor/bin/phpstan analyze --ansi --error-format github --level max --configuration phpstan.neon src tests
+
+.PHONY: phpunit
+phpunit:
+	php vendor/bin/phpunit
