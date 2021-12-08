@@ -10,9 +10,10 @@ The difference between validation and verification can be outlined as follows:
 - Verification contact the ABR through their API to retrieve information registered against the ABN. It will tell you
     if the ABN actually belongs to a business.
 
-In order to use the API (only necessary for verification), you'll need to register an account and receive a GUID which 
-is used as an API key. Once you register you can play with the API using the 
-[official demo](https://abr.business.gov.au/json/) (note that this SDK uses the JSON services instead of XML).
+In order to use the API (only necessary for verification), you'll need to 
+[register an account](https://abr.business.gov.au/Tools/WebServices) to receive a GUID which is used as an API key. 
+Once you register you can play with the API using the [official demo](https://abr.business.gov.au/json/) 
+(note that this SDK uses the JSON services instead of XML).
 
 
 ## Type safety
