@@ -40,10 +40,13 @@ $ composer require hyraiq/abnlookup
 ```
 
 ### Configuration with Symfony
-If you are using Symfony with `autowire: true`, you need to pass you ABR GUID to the `AbnClient` in `services.yaml`:
+
+In `services.yaml`, you need to pass you ABR GUID to the `AbnClient` and register the `AbnClient` with the 
+`AbnClientInterface`:
 
 ```yaml
-Hyra\Integrations\AbnLookup\AbnClient:
+Hyra\AbnLookup\AbnClientInterface: '@Hyra\AbnLookup\AbnClient'
+Hyra\AbnLookup\AbnClient:
     arguments:
         $abnLookupGuid: "%env(ABN_LOOKUP_GUID)%"
 ```
