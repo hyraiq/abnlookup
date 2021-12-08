@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Hyra\AbnLookup\Stubs;
 
 final class AbnFaker
@@ -30,7 +28,6 @@ final class AbnFaker
 
     public static function invalidAbn(): string
     {
-        // @phpstan-ignore-next-line it can find an appropriate source of randomness
         return \str_pad((string) \random_int(1, 999999999), 10, '0', \STR_PAD_LEFT);
     }
 }
