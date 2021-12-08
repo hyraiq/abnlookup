@@ -6,10 +6,6 @@ namespace Hyra\AbnLookup\Stubs;
 
 final class MockNamesResponse
 {
-    private function __construct()
-    {
-    }
-
     /**
      * @return array{Message: string, Names: list<array<string, mixed>>}
      */

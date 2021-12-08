@@ -1,6 +1,21 @@
 {
+    "mheap/phpunit-github-actions-printer": {
+        "version": "v1.5.1"
+    },
+    "pepakriz/phpstan-exception-rules": {
+        "version": "v0.12.0"
+    },
     "phpstan/phpdoc-parser": {
         "version": "1.2.0"
+    },
+    "phpstan/phpstan-phpunit": {
+        "version": "1.0.0"
+    },
+    "phpstan/phpstan-strict-rules": {
+        "version": "1.1.0"
+    },
+    "staabm/annotate-pull-request-from-checkstyle": {
+        "version": "1.7.1"
     },
     "symfony/cache": {
         "version": "v5.4.0"

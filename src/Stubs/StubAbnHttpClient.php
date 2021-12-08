@@ -123,6 +123,7 @@ final class StubAbnHttpClient implements HttpClientInterface
 
         $this->abnDetailsOptions = $options;
 
+        // @phpstan-ignore-next-line - no, a mock http client will not throw TransportException
         return $this->getMockHttpClient()->request('GET', 'AbnDetails.aspx', $options);
     }
 
@@ -137,6 +138,7 @@ final class StubAbnHttpClient implements HttpClientInterface
 
         $this->matchingNamesOptions = $options;
 
+        // @phpstan-ignore-next-line - no, a mock http client will not throw TransportException
         return $this->getMockHttpClient()->request('GET', 'MatchingNames.aspx', $options);
     }
 

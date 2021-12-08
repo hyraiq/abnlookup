@@ -1,0 +1,24 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/pepakriz/phpstan-exception-rules/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+
+parameters:
+  exceptionRules:
+    uncheckedExceptions:
+      - \LogicException
+      - Symfony\Component\Validator\Exception\ConstraintDefinitionException
+      - Symfony\Component\Validator\Exception\InvalidOptionsException
+      - Symfony\Component\Validator\Exception\MissingOptionsException
+      - PHPUnit\Framework\Exception
+
+  excludePaths:
+    - vendor
+  earlyTerminatingMethodCalls:
+    PHPUnit\Framework\TestCase:
+      - fail
+
+  ignoreErrors:
+    # No need for @throws annotations in tests
+    - message: '/Missing @throws [\w\\]+ annotation/'
+      path: tests

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<psalm
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config ./vendor/vimeo/psalm/config.xsd"
+        totallyTyped="true"
+        strictBinaryOperands="true"
+        allowStringToStandInForClass="false"
+        findUnusedPsalmSuppress="true"
+        resolveFromConfigFile="false"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <directory name="tests"/>
+    </projectFiles>
+
+    <issueHandlers>
+        <!-- Start Dead Code Config -->
+
+        <!-- Dead code detection requires a few tricky mechanisms -->
+
+        <!-- Of course the models and have are methods, they're used by consumers of the library -->
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+                <directory name="src/Stubs"/>
+            </errorLevel>
+        </UnusedClass>
+
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="src/Model"/>
+                <directory name="src/Stubs"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+        <!-- End Dead Code Config-->
+
+        <!-- Models have properties set the by serializer and are validated to ensure everything is set -->
+        <MissingConstructor>
+            <errorLevel type="suppress">
+                <directory name="src/Model"/>
+            </errorLevel>
+        </MissingConstructor>
+
+        <!-- Tests set properties in the setUp method -->
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+
+        <!-- Variables are allowed to be mixed, other errors will be picked up when we try to use them anyway -->
+        <MixedAssignment errorLevel="suppress"/>
+
+        <!-- PhpStorm does not support generics yet, so we have to hint the result of ->parseRequest() -->
+        <!-- @see https://youtrack.jetbrains.com/issue/WI-47158 -->
+        <UnnecessaryVarAnnotation errorLevel="suppress" />
+    </issueHandlers>
+</psalm>

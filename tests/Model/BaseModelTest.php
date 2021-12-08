@@ -9,9 +9,8 @@ use Faker\Generator;
 use Hyra\AbnLookup\Dependencies;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class BaseModelTest extends TestCase
@@ -20,21 +19,13 @@ abstract class BaseModelTest extends TestCase
 
     protected ValidatorInterface $validator;
 
-    protected SerializerInterface $serializer;
+    protected Serializer $serializer;
 
-    /**
-     * @param mixed[] $data
-     *
-     * @psalm-suppress MissingParamType
-     * @psalm-suppress InternalMethod
-     */
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    protected function setUp(): void
     {
-        parent::__construct($name, $data, $dataName);
-
         $this->faker = Factory::create();
         $this->faker->seed();
-        $this->validator = Dependencies::validator();
+        $this->validator  = Dependencies::validator();
         $this->serializer = Dependencies::serializer();
     }
 

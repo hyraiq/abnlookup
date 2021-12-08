@@ -6,10 +6,6 @@ namespace Hyra\AbnLookup\Stubs;
 
 final class MockAbnResponse
 {
-    private function __construct()
-    {
-    }
-
     /**
      * @return array<string, mixed>
      */

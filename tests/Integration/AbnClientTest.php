@@ -21,9 +21,9 @@ use PHPUnit\Framework\TestCase;
 
 final class AbnClientTest extends TestCase
 {
-    protected Generator $faker;
-
     private const ABN = '12620650553';
+
+    private Generator $faker;
 
     private AbnClient $client;
 
@@ -170,7 +170,7 @@ final class AbnClientTest extends TestCase
 
         $normalizedResponse = [
             'Message' => $response->message,
-            'Names'   => \array_map(fn (Name $name) => [
+            'Names'   => \array_map(fn (Name $name)   => [
                 'Abn'       => $name->abn,
                 'AbnStatus' => $name->abnStatus,
                 'IsCurrent' => $name->current,
