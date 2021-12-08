@@ -11,6 +11,9 @@
     "phpstan/phpstan-strict-rules": {
         "version": "1.1.0"
     },
+    "staabm/annotate-pull-request-from-checkstyle": {
+        "version": "1.7.1"
+    },
     "symfony/cache": {
         "version": "v5.4.0"
     },
