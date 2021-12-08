@@ -55,7 +55,7 @@ final class AbnResponseTest extends BaseModelTest
     public function getInvalidTests(): \Generator
     {
         $fields                           = MockAbnResponse::valid();
-//        $fields['AbnStatusEffectiveFrom'] = '';
+        $fields['AbnStatusEffectiveFrom'] = '';
         yield 'invalid effective date' => [$fields];
 
         $fields                           = MockAbnResponse::valid();
