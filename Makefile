@@ -33,3 +33,7 @@ phpstan-github:
 .PHONY: phpunit
 phpunit:
 	php vendor/bin/phpunit
+
+.PHONY: phpunit-github
+phpunit-github:
+	php vendor/bin/phpunit --printer mheap\\GithubActionsReporter\\Printer

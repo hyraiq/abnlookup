@@ -1,4 +1,7 @@
 {
+    "mheap/phpunit-github-actions-printer": {
+        "version": "v1.5.1"
+    },
     "pepakriz/phpstan-exception-rules": {
         "version": "v0.12.0"
     },
