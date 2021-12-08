@@ -6,32 +6,23 @@ on:
         branches: [ main ]
 jobs:
     psalm:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
-            -   name: Setup PHP with PECL extension
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: '8.0'
+            -   uses: ./.github/actions/setup-php
             -   name: build
                 run: make psalm-github
     phpstan:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
-            -   name: Setup PHP with PECL extension
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: '8.0'
+            -   uses: ./.github/actions/setup-php
             -   name: build
                 run: make phpstan-github
     cs-fixer:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v2
-            -   name: Setup PHP with PECL extension
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: '8.0'
+            -   uses: ./.github/actions/setup-php
             -   name: build
                 run: make fix-github
