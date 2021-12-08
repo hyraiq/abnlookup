@@ -25,22 +25,29 @@ guaranteed to be valid.
 
 Invalid responses from the ABR fall into three categories, which are handled with exceptions:
 
-- AbrConnectionException: Unable to connect to the ABR, or the ABR returned an unexpected response
-- InvalidAbnException: The ABN is invalid (ie. validation failed)
-- AbnNotFoundException: The ABN is valid, however it is not assigned to a business (ie. verification failed)
+- `AbrConnectionException`: Unable to connect to the ABR, or the ABR returned an unexpected response
+- `InvalidAbnException`: The ABN is invalid (ie. validation failed)
+- `AbnNotFoundException`: The ABN is valid, however it is not assigned to a business (ie. verification failed)
 
 
 ## Usage
 
+### Installation
+
+```shell
+$ composer require hyraiq/abnlookup
+```
+
+### Configuration with Symfony
 If you are using Symfony with `autowire: true`, you need to pass you ABR GUID to the `AbnClient` in `services.yaml`:
 
 ```yaml
-    Hyra\Integrations\AbnLookup\AbnClient:
-        arguments:
-            $abnLookupGuid: "%env(ABN_LOOKUP_GUID)%"
+Hyra\Integrations\AbnLookup\AbnClient:
+    arguments:
+        $abnLookupGuid: "%env(ABN_LOOKUP_GUID)%"
 ```
 
-You can then inject the `AbnClientInterface` directly into your controllers/services:
+You can then inject the `AbnClientInterface` directly into your controllers/services.
 
 ```php
 class VerifyAbnController extends AbtractController
@@ -49,50 +56,39 @@ class VerifyAbnController extends AbtractController
         private AbnClientInterface $abnClient,
     ) {
     }
-
-    public function __invoke(Request $request): Response
-    {
-        $abn = (string) $request->query->get('abn', '');
-
-        try {
-            $abnResponse = $this->abnClient->lookupAbn($abn);
-        } catch (AbrConnectionException) {
-            throw new Response('Unable to contact the ABR');
-        } catch (InvalidAbnException) {
-            return new Response('Invalid ABN');
-        } catch (AbnNotFoundException) {
-            return new Response('ABN not found');
-        }
-
-        return new Response(
-            \sprintf(
-                'ABN %s is assigned to %s and is currently %s',
-                $abnResponse->abn,
-                $abnResponse->entityName,
-                $abnResponse->status,
-            )
-        );
-    }
+    
+    // ...  
+}
 ```
 
-### Outside of Symfony
+### Configuration outside of Symfony
 
 If you're not using Symfony, you'll need to instantiate the ABN client yourself, which can be registered in your service
-container or just used directly. We have provided some helpers in the `Dependencies` class in order to create the 
+container or just used directly. We have provided some helpers in the `Dependencies` class in order to create the
 Symfony Serializer and Validator with minimal options.
 
 ```php
-$abn = '12620650553';
+use Hyra\AbnLookup\Dependencies;
+use Hyra\AbnLookup\AbnClient;
 
 $abrGuid = '<insert your ABR GUID here>'
 
 // Whichever http client you choose
 $httpClient = new HttpClient();
 
-$denormalizer         = Dependencies::serializer();
-$validator            = Dependencies::validator();
+$denormalizer = Dependencies::serializer();
+$validator = Dependencies::validator();
 
 $abnClient = new AbnClient($denormalizer, $validator, $httpClient, $abrGuid);
+```
+
+### Looking up an ABN
+
+Once you have configured your `AbnClient` you can lookup an individual ABN. Note, this will validate the ABN before
+calling the API in order to prevent unnecessary API requests.
+
+```php
+$abn = '12620650553';
 
 try {
     $abnResponse = $abnClient->lookupAbn($abn);
@@ -104,14 +100,9 @@ try {
     die('ABN not found');
 }
 
-die(
-    \sprintf(
-        'ABN %s is assigned to %s and is currently %s',
-        $abnResponse->abn,
-        $abnResponse->entityName,
-        $abnResponse->status,
-    )
-);
+echo $abnResponse->abn; // 12620650553
+echo $abnResponse->entityName; // Blenktech PTY LTD
+echo $abnResponse->status; // Active
 ```
 
 ### Searching by name
