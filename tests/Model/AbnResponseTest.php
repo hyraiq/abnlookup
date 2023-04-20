@@ -47,6 +47,14 @@ final class AbnResponseTest extends BaseModelTest
         $fields        = MockAbnResponse::valid();
         $fields['Gst'] = null;
         yield 'no gst' => [$fields];
+
+        $fields        = MockAbnResponse::valid();
+        $fields['AddressState'] = null;
+        yield 'no address state' => [$fields];
+
+        $fields        = MockAbnResponse::valid();
+        $fields['AddressPostcode'] = null;
+        yield 'no AddressPostcode' => [$fields];
     }
 
     /**
@@ -85,8 +93,6 @@ final class AbnResponseTest extends BaseModelTest
             'AbnStatus',
             'AbnStatusEffectiveFrom',
             'AddressDate',
-            'AddressPostcode',
-            'AddressState',
             'EntityName',
             'EntityTypeCode',
             'EntityTypeName',
