@@ -30,10 +30,10 @@ final class AbnResponse extends AbstractResponse
     public \DateTimeImmutable $addressDate;
 
     #[SerializedName('AddressPostcode')]
-    public ?string $addressPostcode;
+    public string $addressPostcode;
 
     #[SerializedName('AddressState')]
-    public ?string $addressState;
+    public string $addressState;
 
     /**
      * @var string[]
