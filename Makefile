@@ -37,3 +37,10 @@ phpunit:
 .PHONY: phpunit-github
 phpunit-github:
 	php vendor/bin/phpunit --printer mheap\\GithubActionsReporter\\Printer
+
+.PHONY: all
+all:
+	make fix
+	make psalm
+	make phpstan
+	make phpunit

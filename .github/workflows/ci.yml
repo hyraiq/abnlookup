@@ -1,35 +1,45 @@
 name: CI
+
 on:
     pull_request: ~
     workflow_dispatch: ~
     push:
         branches: [ main ]
+
 jobs:
     psalm:
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
             -   uses: ./.github/actions/setup-php
             -   name: Build
                 run: make psalm-github
+
     phpstan:
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
             -   uses: ./.github/actions/setup-php
             -   name: Build
                 run: make phpstan-github
+
     cs-fixer:
         runs-on: ubuntu-latest
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
             -   uses: ./.github/actions/setup-php
             -   name: Build
                 run: make fix-github
+
     phpunit:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php-version: [ '8.0', '8.1', '8.2' ]
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v3
             -   uses: ./.github/actions/setup-php
+                with:
+                    php-version: ${{ matrix.php-version }}
             -   name: Build
                 run: make phpunit-github

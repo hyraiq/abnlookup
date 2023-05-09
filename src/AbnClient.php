@@ -103,7 +103,9 @@ final class AbnClient implements AbnClientInterface
 
     /**
      * @template T of AbstractResponse
+     *
      * @psalm-param    class-string<T> $type
+     *
      * @psalm-return   T
      *
      * @throws AbnNotFoundException
