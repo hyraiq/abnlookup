@@ -170,7 +170,7 @@ final class AbnClientTest extends TestCase
 
         $normalizedResponse = [
             'Message' => $response->message,
-            'Names'   => \array_map(fn (Name $name)   => [
+            'Names'   => \array_map(fn (Name $name) => [
                 'Abn'       => $name->abn,
                 'AbnStatus' => $name->abnStatus,
                 'IsCurrent' => $name->current,

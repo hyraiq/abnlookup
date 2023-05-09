@@ -50,7 +50,7 @@ final class StubAbnHttpClient implements HttpClientInterface
     /**
      * @param mixed[] $options
      */
-    public function withOptions(array $options): self
+    public function withOptions(array $options): static
     {
         $this->defaultOptions = $options;
 

@@ -13,6 +13,7 @@ final class NamesResponse extends AbstractResponse
      * @var Name[]
      *
      * @Assert\All({
+     *
      *     @Assert\Type("Hyra\AbnLookup\Model\Name")
      * })
      */

@@ -39,6 +39,7 @@ final class AbnResponse extends AbstractResponse
      * @var string[]
      *
      * @Assert\All({
+     *
      *     @Assert\Type("string")
      * })
      */
