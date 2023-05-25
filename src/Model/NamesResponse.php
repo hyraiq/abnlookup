@@ -11,13 +11,9 @@ final class NamesResponse extends AbstractResponse
 {
     /**
      * @var Name[]
-     *
-     * @Assert\All({
-     *
-     *     @Assert\Type("Hyra\AbnLookup\Model\Name")
-     * })
      */
     #[SerializedName('Names')]
     #[Assert\Valid]
+    #[Assert\All(constraints: new Assert\Type(Name::class))]
     public array $names = [];
 }
