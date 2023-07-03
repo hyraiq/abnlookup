@@ -16,7 +16,7 @@ final class MockAbnResponse
             'AbnStatus'              => 'Active',
             'AbnStatusEffectiveFrom' => '2017-07-24',
             'Acn'                    => '620650553',
-            'AddressDate'            => '2017-07-24',
+            'AddressDate'            => null,
             'AddressPostcode'        => '4000',
             'AddressState'           => 'QLD',
             'BusinessName'           => [
