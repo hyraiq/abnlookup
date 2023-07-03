@@ -92,7 +92,6 @@ final class AbnResponseTest extends BaseModelTest
             'Abn',
             'AbnStatus',
             'AbnStatusEffectiveFrom',
-            'AddressDate',
             'EntityName',
             'EntityTypeCode',
             'EntityTypeName',
