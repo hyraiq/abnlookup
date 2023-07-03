@@ -125,7 +125,7 @@ final class AbnClientTest extends TestCase
             'AbnStatus'              => $response->abnStatus,
             'AbnStatusEffectiveFrom' => $response->abnStatusEffectiveFrom->format('Y-m-d'),
             'Acn'                    => $response->acn,
-            'AddressDate'            => $response->addressDate->format('Y-m-d'),
+            'AddressDate'            => $response->addressDate?->format('Y-m-d'),
             'AddressPostcode'        => $response->addressPostcode,
             'AddressState'           => $response->addressState,
             'BusinessName'           => $response->businessNames,
