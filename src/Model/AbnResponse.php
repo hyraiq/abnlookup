@@ -27,7 +27,7 @@ final class AbnResponse extends AbstractResponse
 
     #[SerializedName('AddressDate')]
     #[NotBlank]
-    public \DateTimeImmutable $addressDate;
+    public ?\DateTimeImmutable $addressDate = null;
 
     #[SerializedName('AddressPostcode')]
     public string $addressPostcode;
