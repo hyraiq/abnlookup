@@ -9,14 +9,14 @@ runs:
                 php-version: '8.1'
         -   id: get-composer-cache-directory
             name: Get Composer caches directory path
-            run: echo "::set-output name=dir::$(php composer.phar config cache-files-dir)"
+            run: echo "COMPOSER_CACHE_DIR=$(php composer.phar config cache-files-dir)" >> $GITHUB_ENV
             shell: bash
 
         -   id: mount-cache-directory
             name: Mount cache directory
-            uses: actions/cache@v2
+            uses: actions/cache@v4
             with:
-                path: ${{ steps.get-composer-cache-directory.outputs.dir }}
+                path: ${{ env.COMPOSER_CACHE_DIR }}
                 key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                 restore-keys: ${{ runner.os }}-composer-
 
