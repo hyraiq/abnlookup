@@ -28,7 +28,7 @@ final class AbnClient implements AbnClientInterface
         private ValidatorInterface $validator,
         HttpClientInterface $client,
         string $abnLookupGuid,
-        string $abnLookupBaseApiUri,
+        string $abnLookupBaseApiUri = 'https://abr.business.gov.au/json/',
     ) {
         $this->client = $client->withOptions([
             'base_uri' => $abnLookupBaseApiUri,
