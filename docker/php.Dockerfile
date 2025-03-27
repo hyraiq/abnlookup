@@ -1,4 +1,4 @@
-FROM php:8.3-bullseye
+FROM php:8.0-bullseye
 
 RUN apt-get update -qq \
     && apt-get install -qq git libzip-dev unzip \
@@ -11,4 +11,4 @@ RUN docker-php-ext-install \
 RUN pecl install xdebug > /dev/null \
     && docker-php-ext-enable xdebug > /dev/null
 
-CMD ["bash"]
+CMD ['bash']
