@@ -31,6 +31,8 @@ final class AbnClientTest extends TestCase
 
     private string $guid;
 
+    private string $baseApiUri;
+
     protected function setUp(): void
     {
         $this->faker          = Factory::create();
@@ -38,8 +40,9 @@ final class AbnClientTest extends TestCase
         $validator            = Dependencies::validator();
         $this->stubHttpClient = new StubAbnHttpClient();
         $this->guid           = $this->faker->uuid;
+        $this->baseApiUri     = 'https://abr.business.gov.au/json/';
 
-        $this->client = new AbnClient($denormalizer, $validator, $this->stubHttpClient, $this->guid);
+        $this->client = new AbnClient($denormalizer, $validator, $this->stubHttpClient, $this->guid, $this->baseApiUri);
     }
 
     /**
@@ -49,7 +52,7 @@ final class AbnClientTest extends TestCase
     public function testClientInitialisedCorrectly(): void
     {
         $this->stubHttpClient->assertDefaultOptions([
-            'base_uri' => 'https://abr.business.gov.au/json/',
+            'base_uri' => $this->baseApiUri,
             'query'    => [
                 'guid'     => $this->guid,
                 'callback' => 'callback',
