@@ -17,13 +17,13 @@ return $config->setRules([
         'default'   => 'align_single_space_minimal',
         'operators' => ['===' => 'single_space'],
     ],
-    'compact_nullable_typehint'                     => true,
+    'compact_nullable_type_declaration'             => true,
     'concat_space'                                  => ['spacing' => 'one'],
     'class_definition'                              => [
         'multi_line_extends_each_single_line' => true,
     ],
     'date_time_immutable'                           => true,
-    'escape_implicit_backslashes'                   => true,
+    'string_implicit_backslashes'                   => true,
     'explicit_indirect_variable'                    => true,
     'explicit_string_variable'                      => true,
     'fopen_flags'                                   => ['b_mode' => true],
@@ -57,9 +57,9 @@ return $config->setRules([
     'phpdoc_types_order'                            => true,
     'simplified_null_return'                        => false,
     'single_line_throw'                             => false,
-    'single_space_after_construct'                  => [
+    'single_space_around_construct'                 => [
         // Remove 'implements' because long declaration lines must follow PSR-2
-        'constructs' => [
+        'constructs_followed_by_a_single_space' => [
             'abstract', 'as', 'attribute', 'break', 'case', 'catch', 'class', 'clone', 'const', 'const_import',
             'continue', 'do', 'echo', 'else', 'elseif', 'extends', 'final', 'finally', 'for', 'foreach',
             'function', 'function_import', 'global', 'goto', 'if', 'include', 'include_once', 'instanceof',
