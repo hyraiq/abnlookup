@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Hyra\AbnLookup;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -24,12 +25,13 @@ final class Dependencies
 {
     public static function serializer(): Serializer
     {
-        // @phpstan-ignore-next-line the AnnotationException is only thrown if necessary modules aren't loaded
-        $classMetadataFactory       = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $classMetadataFactory       = new ClassMetadataFactory(new AttributeLoader());
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
         $propertyAccessor           = new PropertyAccessor();
+        /** @var iterable<PropertyTypeExtractorInterface> $typeExtractors */
+        $typeExtractors = [new PhpDocExtractor(), new ReflectionExtractor(), new SerializerExtractor($classMetadataFactory)];
 
-        $propertyExtractor = new PropertyInfoExtractor([], [new PhpDocExtractor(), new ReflectionExtractor()]);
+        $propertyExtractor = new PropertyInfoExtractor(typeExtractors: $typeExtractors);
 
         $objectNormalizer = new ObjectNormalizer(
             $classMetadataFactory,
@@ -56,8 +58,7 @@ final class Dependencies
     public static function validator(): ValidatorInterface
     {
         return Validation::createValidatorBuilder()
-            ->enableAnnotationMapping()
-            ->addDefaultDoctrineAnnotationReader()
+            ->enableAttributeMapping()
             ->getValidator()
         ;
     }

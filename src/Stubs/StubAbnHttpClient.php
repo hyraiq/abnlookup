@@ -38,11 +38,11 @@ final class StubAbnHttpClient implements HttpClientInterface
             'MatchingNames.aspx' => $this->handleMatchingNamesRequest($options),
             default              => throw new \LogicException(
                 'Not implemented: AbnClient only responds to AbnDetails and MatchingNames'
-            )
+            ),
         };
     }
 
-    public function stream($responses, float $timeout = null): ResponseStreamInterface
+    public function stream($responses, ?float $timeout = null): ResponseStreamInterface
     {
         throw new \LogicException('Not implemented: AbnClient should only be using the request method');
     }
