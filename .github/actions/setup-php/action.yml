@@ -10,5 +10,5 @@ runs:
 
         -   id: install-composer-dependencies
             name: Install composer dependencies
-            run: php composer.phar install --ansi
+            run: make vendor
             shell: bash
