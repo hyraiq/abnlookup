@@ -40,6 +40,7 @@ phpunit:
 
 .PHONY: phpunit-github
 phpunit-github:
+	php -v
 	php vendor/bin/phpunit --printer mheap\\GithubActionsReporter\\Printer
 
 .PHONY: all
