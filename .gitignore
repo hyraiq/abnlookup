@@ -1,4 +1,7 @@
 /vendor/
+# Ignore the .lock files because this is a library
+composer.lock
+symfony.lock
 
 ###> phpstorm ###
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore

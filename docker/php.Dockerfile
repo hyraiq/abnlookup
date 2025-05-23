@@ -1,4 +1,4 @@
-FROM php:8.0-bullseye
+FROM php:8.2-bullseye
 
 RUN apt-get update -qq \
     && apt-get install -qq git libzip-dev unzip \

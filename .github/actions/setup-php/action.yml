@@ -6,21 +6,9 @@ runs:
         -   name: Install PHP
             uses: shivammathur/setup-php@v2
             with:
-                php-version: '8.1'
-        -   id: get-composer-cache-directory
-            name: Get Composer caches directory path
-            run: echo "COMPOSER_CACHE_DIR=$(php composer.phar config cache-files-dir)" >> $GITHUB_ENV
-            shell: bash
-
-        -   id: mount-cache-directory
-            name: Mount cache directory
-            uses: actions/cache@v4
-            with:
-                path: ${{ env.COMPOSER_CACHE_DIR }}
-                key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                restore-keys: ${{ runner.os }}-composer-
+                php-version: '8.2'
 
         -   id: install-composer-dependencies
             name: Install composer dependencies
-            run: php composer.phar install --ansi
+            run: make vendor
             shell: bash

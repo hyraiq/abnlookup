@@ -7,7 +7,7 @@ namespace Hyra\AbnLookup\Exception;
 final class AbnNotFoundException extends \RuntimeException
 {
     public function __construct(
-        \Throwable $previous = null
+        ?\Throwable $previous = null,
     ) {
         parent::__construct(
             'ABN not found',
