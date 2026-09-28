@@ -8,6 +8,7 @@ use Hyra\AbnLookup\AbnClientInterface;
 use Hyra\AbnLookup\AbnValidator;
 use Hyra\AbnLookup\Exception\AbnNotFoundException;
 use Hyra\AbnLookup\Exception\InvalidAbnException;
+use Hyra\AbnLookup\Exception\SuppressedAbnException;
 use Hyra\AbnLookup\Model\AbnResponse;
 use Hyra\AbnLookup\Model\NamesResponse;
 
@@ -18,6 +19,9 @@ final class StubAbnClient implements AbnClientInterface
 
     /** @var string[] */
     private array $notFoundAbns = [];
+
+    /** @var string[] */
+    private array $suppressedAbns = [];
 
     public function lookupAbn(string $abn): AbnResponse
     {
@@ -31,6 +35,10 @@ final class StubAbnClient implements AbnClientInterface
 
         if (\in_array($abn, $this->notFoundAbns, true)) {
             throw new AbnNotFoundException();
+        }
+
+        if (\in_array($abn, $this->suppressedAbns, true)) {
+            throw new SuppressedAbnException($abn, 'Active', new \DateTimeImmutable('-1 year'), null);
         }
 
         throw new \LogicException('Make sure you set a stub response for the abn before calling the AbnClient');
@@ -52,6 +60,14 @@ final class StubAbnClient implements AbnClientInterface
     {
         $this->notFoundAbns = \array_merge(
             $this->notFoundAbns,
+            $abns,
+        );
+    }
+
+    public function addSuppressedAbns(string ...$abns): void
+    {
+        $this->suppressedAbns = \array_merge(
+            $this->suppressedAbns,
             $abns,
         );
     }
