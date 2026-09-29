@@ -2,6 +2,12 @@
 vendor:
 	php ./composer.phar install --no-interaction --no-plugins --ansi
 
+# The committed composer.phar is 2.5.5, which rejects any GitHub token containing a hyphen. Actions issues one per
+# job, so most jobs died before installing anything. Use the composer setup-php puts on the PATH instead.
+.PHONY: vendor-github
+vendor-github:
+	composer install --no-interaction --no-plugins --ansi
+
 .PHONY: fix
 fix:
 	php vendor/bin/php-cs-fixer fix src tests \

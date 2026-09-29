@@ -10,5 +10,5 @@ runs:
 
         -   id: install-composer-dependencies
             name: Install composer dependencies
-            run: make vendor
+            run: make vendor-github
             shell: bash
