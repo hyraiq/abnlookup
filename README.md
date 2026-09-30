@@ -32,8 +32,8 @@ Invalid responses from the ABR fall into three categories, which are handled wit
 
 The ABR can also suppress an ABN's details at the holder's request. It then returns only the ABN, its status and its
 GST registration, with no entity name or type. The SDK throws a `SuppressedAbnException` for these ABNs, and the
-exception carries those fields. It extends `UnexpectedResponseException`, so code that only catches
-`AbrConnectionException` still handles it.
+exception carries those fields. It extends `UnexpectedResponseException` (an `AbrConnectionException`), so existing
+catch blocks for either still handle it.
 
 
 ## Usage
