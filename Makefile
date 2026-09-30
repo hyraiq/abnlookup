@@ -1,8 +1,6 @@
-COMPOSER_BIN ?= php ./composer.phar
-
 .PHONY: vendor
 vendor:
-	$(COMPOSER_BIN) install --no-interaction --no-plugins --ansi
+	composer install --no-interaction --no-plugins --ansi
 
 .PHONY: fix
 fix:

@@ -11,4 +11,6 @@ RUN docker-php-ext-install \
 RUN pecl install xdebug > /dev/null \
     && docker-php-ext-enable xdebug > /dev/null
 
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 CMD ['bash']

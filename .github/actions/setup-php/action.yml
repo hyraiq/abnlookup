@@ -17,6 +17,5 @@ runs:
 
         -   id: install-composer-dependencies
             name: Install composer dependencies
-            # The committed composer.phar is 2.5.5, which rejects any Actions token containing a hyphen.
-            run: make vendor COMPOSER_BIN=composer
+            run: make vendor
             shell: bash
