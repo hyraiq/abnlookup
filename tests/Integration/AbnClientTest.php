@@ -12,6 +12,7 @@ use Hyra\AbnLookup\Exception\AbnNotFoundException;
 use Hyra\AbnLookup\Exception\AbrConnectionException;
 use Hyra\AbnLookup\Exception\InvalidAbnException;
 use Hyra\AbnLookup\Exception\InvalidGuidException;
+use Hyra\AbnLookup\Exception\SuppressedAbnException;
 use Hyra\AbnLookup\Exception\UnexpectedResponseException;
 use Hyra\AbnLookup\Model\Name;
 use Hyra\AbnLookup\Stubs\MockAbnResponse;
@@ -111,6 +112,92 @@ final class AbnClientTest extends TestCase
         $this->expectException(UnexpectedResponseException::class);
 
         $this->client->lookupAbn(static::ABN);
+    }
+
+    public function testLookupAbnWhenAbnSuppressed(): void
+    {
+        $this->stubHttpClient->setStubResponse(MockAbnResponse::suppressed());
+
+        try {
+            $this->client->lookupAbn(static::ABN);
+            static::fail('Expected a SuppressedAbnException');
+        } catch (SuppressedAbnException $e) {
+            static::assertSame(static::ABN, $e->abn);
+            static::assertSame('Active', $e->abnStatus);
+            static::assertSame('2017-07-24', $e->abnStatusEffectiveFrom->format('Y-m-d'));
+            static::assertSame('2018-04-03', $e->gst?->format('Y-m-d'));
+        }
+    }
+
+    public function testLookupAbnWhenAbnSuppressedIsStillAnUnexpectedResponse(): void
+    {
+        $this->stubHttpClient->setStubResponse(MockAbnResponse::suppressed());
+
+        $this->expectException(UnexpectedResponseException::class);
+
+        $this->client->lookupAbn(static::ABN);
+    }
+
+    public function testLookupAbnWhenCancelledAbnSuppressed(): void
+    {
+        $response              = MockAbnResponse::suppressed();
+        $response['AbnStatus'] = 'Cancelled';
+        $response['Gst']       = null;
+        $this->stubHttpClient->setStubResponse($response);
+
+        try {
+            $this->client->lookupAbn(static::ABN);
+            static::fail('Expected a SuppressedAbnException');
+        } catch (SuppressedAbnException $e) {
+            static::assertSame('Cancelled', $e->abnStatus);
+            static::assertNull($e->gst);
+        }
+    }
+
+    /**
+     * @dataProvider dataProviderBrokenResponsesThatLookSuppressed
+     *
+     * @param mixed[] $mockResponse
+     */
+    public function testLookupAbnDoesNotReportABrokenResponseAsSuppressed(array $mockResponse): void
+    {
+        $this->stubHttpClient->setStubResponse($mockResponse);
+
+        try {
+            $this->client->lookupAbn(static::ABN);
+            static::fail('Expected an UnexpectedResponseException');
+        } catch (UnexpectedResponseException $e) {
+            static::assertNotInstanceOf(SuppressedAbnException::class, $e);
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function dataProviderBrokenResponsesThatLookSuppressed(): array
+    {
+        $blankAbn        = MockAbnResponse::suppressed();
+        $blankAbn['Abn'] = '';
+
+        $blankStatus              = MockAbnResponse::suppressed();
+        $blankStatus['AbnStatus'] = '';
+
+        $missingEntityName = MockAbnResponse::suppressed();
+        unset($missingEntityName['EntityName']);
+
+        $blankEntityNameOnly               = MockAbnResponse::valid();
+        $blankEntityNameOnly['EntityName'] = '';
+
+        $blankEntityTypeCodeOnly                   = MockAbnResponse::valid();
+        $blankEntityTypeCodeOnly['EntityTypeCode'] = '';
+
+        return [
+            'blank abn'                   => [$blankAbn],
+            'blank status'                => [$blankStatus],
+            'missing entity name'         => [$missingEntityName],
+            'blank entity name only'      => [$blankEntityNameOnly],
+            'blank entity type code only' => [$blankEntityTypeCodeOnly],
+        ];
     }
 
     public function testLookupAbnSuccess(): void

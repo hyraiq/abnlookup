@@ -30,6 +30,11 @@ Invalid responses from the ABR fall into three categories, which are handled wit
 - `InvalidAbnException`: The ABN is invalid (ie. validation failed)
 - `AbnNotFoundException`: The ABN is valid, however it is not assigned to a business (ie. verification failed)
 
+The ABR can also suppress an ABN's details at the holder's request. It then returns only the ABN, its status and its
+GST registration, with no entity name or type. The SDK throws a `SuppressedAbnException` for these ABNs, and the
+exception carries those fields. It extends `UnexpectedResponseException` (an `AbrConnectionException`), so existing
+catch blocks for either still handle it.
+
 
 ## Usage
 
@@ -96,6 +101,8 @@ $abn = '12620650553';
 
 try {
     $abnResponse = $abnClient->lookupAbn($abn);
+} catch (SuppressedAbnException $e) {
+    die(\sprintf('ABN %s is %s, but its details are suppressed', $e->abn, $e->abnStatus));
 } catch (AbrConnectionException $e) {
     die($e->getMessage())
 } catch (InvalidAbnException) {
@@ -140,6 +147,10 @@ $stubClient->lookupAbn(AbnFaker::validAbn()); // LogicException - You need to te
 $abn = AbnFaker::validAbn();
 $stubClient->addNotFoundAbns($abn);
 $stubClient->lookupAbn($abn); // AbnNotFoundException
+
+$abn = AbnFaker::validAbn();
+$stubClient->addSuppressedAbns($abn);
+$stubClient->lookupAbn($abn); // SuppressedAbnException
 
 $abn = AbnFaker::validAbn();
 $mockResponse = new AbnResponse();

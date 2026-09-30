@@ -8,6 +8,7 @@ use Hyra\AbnLookup\Exception\AbnNotFoundException;
 use Hyra\AbnLookup\Exception\AbrConnectionException;
 use Hyra\AbnLookup\Exception\InvalidAbnException;
 use Hyra\AbnLookup\Exception\InvalidGuidException;
+use Hyra\AbnLookup\Exception\SuppressedAbnException;
 use Hyra\AbnLookup\Exception\UnexpectedResponseException;
 use Hyra\AbnLookup\Model\AbnResponse;
 use Hyra\AbnLookup\Model\AbstractResponse;
@@ -21,6 +22,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class AbnClient implements AbnClientInterface
 {
+    private const SUPPRESSED_ABN_VIOLATIONS = ['entityName', 'entityTypeCode', 'entityTypeName'];
+
     private HttpClientInterface $client;
 
     public function __construct(
@@ -136,12 +139,35 @@ final class AbnClient implements AbnClientInterface
                 \iterator_to_array($violations)
             );
 
+            if ($model instanceof AbnResponse && self::isSuppressed($body, $errors)) {
+                throw new SuppressedAbnException(
+                    $model->abn,
+                    $model->abnStatus,
+                    $model->abnStatusEffectiveFrom,
+                    $model->gst,
+                );
+            }
+
             throw new UnexpectedResponseException(
                 \sprintf('ABR response contains errors "%s": %s', $response, \json_encode($errors))
             );
         }
 
         return $model;
+    }
+
+    /**
+     * The ABR has no suppression flag. It blanks every detail except the ABN, its status and GST, and a record it has
+     * not suppressed always carries an entity name and type.
+     *
+     * @param mixed[]  $body
+     * @param string[] $violations
+     */
+    private static function isSuppressed(array $body, array $violations): bool
+    {
+        return [] === \array_diff($violations, self::SUPPRESSED_ABN_VIOLATIONS)
+            && '' === ($body['EntityName'] ?? null)
+            && '' === ($body['EntityTypeCode'] ?? null);
     }
 
     /**

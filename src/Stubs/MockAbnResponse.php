@@ -34,6 +34,28 @@ final class MockAbnResponse
     /**
      * @return array<string, mixed>
      */
+    public static function suppressed(): array
+    {
+        return [
+            'Abn'                    => '12620650553',
+            'AbnStatus'              => 'Active',
+            'AbnStatusEffectiveFrom' => '2017-07-24',
+            'Acn'                    => '',
+            'AddressDate'            => null,
+            'AddressPostcode'        => '',
+            'AddressState'           => '',
+            'BusinessName'           => [],
+            'EntityName'             => '',
+            'EntityTypeCode'         => '',
+            'EntityTypeName'         => '',
+            'Gst'                    => '2018-04-03',
+            'Message'                => '',
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     public static function noAbnFound(): array
     {
         return [
