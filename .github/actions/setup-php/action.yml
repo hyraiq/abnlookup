@@ -1,12 +1,19 @@
 name: Setup PHP
 description: Setup PHP build
+
+inputs:
+    php-version:
+        description: The PHP version to install
+        required: false
+        default: '8.2'
+
 runs:
     using: composite
     steps:
         -   name: Install PHP
             uses: shivammathur/setup-php@v2
             with:
-                php-version: '8.2'
+                php-version: ${{ inputs.php-version }}
 
         -   id: install-composer-dependencies
             name: Install composer dependencies

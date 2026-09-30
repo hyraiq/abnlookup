@@ -47,7 +47,7 @@ abstract class BaseModelTest extends TestCase
         }
 
         $errors = \array_map(
-            fn (ConstraintViolationInterface $violation) => \sprintf(
+            static fn (ConstraintViolationInterface $violation) => \sprintf(
                 '%s: %s',
                 $violation->getPropertyPath(),
                 (string) $violation->getMessage()

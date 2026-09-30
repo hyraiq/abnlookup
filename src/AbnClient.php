@@ -107,11 +107,11 @@ final class AbnClient implements AbnClientInterface
      *
      * @psalm-param    class-string<T> $type
      *
-     * @psalm-return   T
-     *
      * @throws AbnNotFoundException
      * @throws InvalidAbnException
      * @throws AbrConnectionException
+     *
+     * @psalm-return   T
      */
     private function decodeResponse(string $response, string $type): object
     {
@@ -132,7 +132,7 @@ final class AbnClient implements AbnClientInterface
 
         if (0 < \count($violations)) {
             $errors = \array_map(
-                fn (ConstraintViolationInterface $violation) => $violation->getPropertyPath(),
+                static fn (ConstraintViolationInterface $violation) => $violation->getPropertyPath(),
                 \iterator_to_array($violations)
             );
 

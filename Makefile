@@ -1,6 +1,6 @@
 .PHONY: vendor
 vendor:
-	php ./composer.phar install --no-interaction --no-plugins --ansi
+	composer install --no-interaction --no-plugins --ansi
 
 .PHONY: fix
 fix:
