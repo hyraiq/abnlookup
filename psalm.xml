@@ -55,12 +55,5 @@
         <!-- PhpStorm does not support generics yet, so we have to hint the result of ->parseRequest() -->
         <!-- @see https://youtrack.jetbrains.com/issue/WI-47158 -->
         <UnnecessaryVarAnnotation errorLevel="suppress" />
-
-        <!-- Its replacement, Serializer\Attribute\SerializedName, only exists from Symfony 6.4, and we still support 6.0 -->
-        <DeprecatedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Symfony\Component\Serializer\Annotation\SerializedName"/>
-            </errorLevel>
-        </DeprecatedClass>
     </issueHandlers>
 </psalm>
