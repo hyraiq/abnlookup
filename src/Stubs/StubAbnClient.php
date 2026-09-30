@@ -38,7 +38,7 @@ final class StubAbnClient implements AbnClientInterface
         }
 
         if (\in_array($abn, $this->suppressedAbns, true)) {
-            throw new SuppressedAbnException($abn, 'Active', new \DateTimeImmutable('-1 year'), null);
+            throw new SuppressedAbnException($abn, 'Active', new \DateTimeImmutable('2017-07-24'), null);
         }
 
         throw new \LogicException('Make sure you set a stub response for the abn before calling the AbnClient');
