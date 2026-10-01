@@ -44,7 +44,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "^6.0 | ^7.0"
+            "require": "^6.4 | ^7.0 | ^8.0"
         }
     },
     "config": {
